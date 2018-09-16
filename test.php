@@ -15,7 +15,7 @@ function getDirectory() {
 }
 $dir = getDirectory();
 if (is_dir($dir)) $hashFile->hashDirectoryFiles($dir);
-if (is_file($dir)) $hashFile->hashFile($file);
+if (is_file($dir)) $hashFile->hashFile($dir);
 $hashes = $hashFile->getHashes();
 foreach ($hashes as $file => $hash) {
     echo '\'' . $file . '\' => \'' . $hash . '\',' . PHP_EOL;
