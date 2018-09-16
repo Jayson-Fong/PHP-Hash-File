@@ -13,8 +13,10 @@ function getDirectory() {
     }
     return $dir;
 }
-$hashFile->hashDirectoryFiles(getDirectory());
+$dir = getDirectory();
+if (is_dir($dir)) $hashFile->hashDirectoryFiles($dir);
+if (is_file($dir)) $hashFile->hashFile($file);
 $hashes = $hashFile->getHashes();
 foreach ($hashes as $file => $hash) {
-        echo '\'' . $file . '\' => \'' . $hash . '\',' . PHP_EOL;
+    echo '\'' . $file . '\' => \'' . $hash . '\',' . PHP_EOL;
 }
