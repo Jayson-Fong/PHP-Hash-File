@@ -1,7 +1,8 @@
 <?php
 class hashFile {
-    public $hashes = array();
-    public $base = '';
+    private $hashes = array();
+    private $compare = array();
+    private $base = '';
     public function __construct($base = null) {
         if (!is_null($base)) $this->base = $base;
     }
@@ -27,5 +28,30 @@ class hashFile {
     }
     public function getHashes() {
         return $this->hashes;
+    }
+    public function compareFile($fileFull, $compare = array()) {
+        if (is_file($fileFull)) {
+            $file = str_replace($this->base, '', $fileFull);
+            if (isset($compare[$file]) && array_key_exists($file, $compare) && md5_file($fileFull) == $compare[$file]) {
+                $this->compare[$file] = 1;
+            } else {
+                $this->compare[$file] = 0;
+            }
+        }
+    }
+    public function compareDirectory($directory, $compare = array()) {
+        $dir = scandir($directory);
+        foreach ($dir as $file) {
+            if ($file != '.' && $file != '..') {
+                if (is_dir($directory . '/' . $file)) {
+                    $this->compareDirectory($directory . '/' . $file);
+                } else {
+                    $this->compareFile($directory . '/' . $file, $compare);
+                }
+            }
+        }
+    }
+    public function getCompareData() {
+        return $this->compare;
     }
 }
