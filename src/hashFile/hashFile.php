@@ -44,7 +44,7 @@ class hashFile {
         foreach ($dir as $file) {
             if ($file != '.' && $file != '..') {
                 if (is_dir($directory . '/' . $file)) {
-                    $this->compareDirectory($directory . '/' . $file);
+                    $this->compareDirectory($directory . '/' . $file, $compare);
                 } else {
                     $this->compareFile($directory . '/' . $file, $compare);
                 }
